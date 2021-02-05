@@ -34,7 +34,7 @@ mil = C_rate = 1000000
 lambda_alpha_factor = 5
 
 #plot functions for Q3 and Q6
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 # def plot_q3_4():
 #     plt.title("E[N] - Rho ")
 #     plt.plot(rho_list, EN, marker='.')
@@ -52,7 +52,7 @@ lambda_alpha_factor = 5
 #     plt.close()
 
 
-# def plot_q5_6(EN,PIDLE):
+# def plot_q5_6(EN,PIDLE,PLOSS):
 #         #set up lists to record data for each Packet size
 #     EN_10 = []
 #     EN_25 = []
@@ -71,7 +71,7 @@ lambda_alpha_factor = 5
 #     plt.show()
 #     plt.close()
     
-#     PIDLE_10 = []python
+#     PIDLE_10 = []
 #     PIDLE_25 = []
 #     PIDLE_50 = []
 #     PIDLE_10 = PIDLE[0:11]
@@ -83,6 +83,23 @@ lambda_alpha_factor = 5
 #     plt.plot(rho_list_second, PIDLE_10,label="K = 10",marker='.')
 #     plt.plot(rho_list_second, PIDLE_25,label="K = 25",marker='.')
 #     plt.plot(rho_list_second, PIDLE_50,label="K = 50",marker='.')
+#     plt.grid()
+#     plt.legend()
+#     plt.show()
+#     plt.close()
+
+#     PLOSS_10 = []
+#     PLOSS_25 = []
+#     PLOSS_50 = []
+#     PLOSS_10 = PLOSS[0:11]
+#     PLOSS_25 = PLOSS[11:12+10]
+#     PLOSS_50 = PLOSS[12+10:]
+#     plt.title("Ploss - Rho")
+#     plt.xlabel('Rho values')
+#     plt.ylabel('Percent of loss system')
+#     plt.plot(rho_list_second, PLOSS_10,label="K = 10",marker='.')
+#     plt.plot(rho_list_second, PLOSS_25,label="K = 25",marker='.')
+#     plt.plot(rho_list_second, PLOSS_50,label="K = 50",marker='.')
 #     plt.grid()
 #     plt.legend()
 #     plt.show()
@@ -268,7 +285,6 @@ elif(test_number == 6):
         #get data packets running ...
         #start of simulation 
         
-        
         # set up timestamps where observer checks the queue  
         while observerStream < Time:
             observerStream = exp_rad_var(alpha) + observerStream
@@ -354,6 +370,7 @@ elif(test_number == 6):
         round_index = 0
         total_avg = []
         total_p_loss = []
+        total_p_idle = []
         for K in packet_list:
             for rho in rho_list_second:
                 round_index = round_index + 1 
@@ -365,20 +382,20 @@ elif(test_number == 6):
                 line_result = 'P idle:      {:<30}      P loss:     {:<30}          E[N]: {:<30}'.format(pidle,ploss,e_n)
                 print(line_result)
                 print()
+                total_p_idle.append(pidle)
                 total_avg.append(e_n)
                 total_p_loss.append(ploss)
             print("------------------------------------------------------------------------------------")
-        return total_avg,total_p_loss
+        return total_avg,total_p_idle,total_p_loss
 
     print()
     print("Question 5-6 with T = 1000s but with no plots")
-    tv, tloss = queue_with_finite_buffer(1000)
-    plot_q5_6(tv,tloss)
+    tv, tidle, tloss = queue_with_finite_buffer(1000)
+    #plot_q5_6(tv,tidle,tloss)
 
     print()
     print("Question 5-6 with T = 2000s but with no plots")
-    tv, tloss = queue_with_finite_buffer(2000)
-    # plot_q5_6(tv,tloss)
+    tv, tidle, tloss = queue_with_finite_buffer(2000)
 else: print("Please Re-enter number to enter the program!")
 
 print('\n' * 3)
