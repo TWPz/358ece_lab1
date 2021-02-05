@@ -246,9 +246,13 @@ elif(test_number == 3):
     #plot_q3_4()
 
     print()
-    print("Question 4 with rho = 1.2")
+    print("Question 4 with rho = 1.2 and T = 1000s")
     rho_list = [1.2]
-    EN,PIDLE = queue_with_infinite_buffer(1000)
+    for i in range(6):
+        EN,PIDLE = queue_with_infinite_buffer(1000)
+    print("Question 4 with rho = 1.2 and T = 2000s")
+    EN,PIDLE = queue_with_infinite_buffer(2000)
+    EN,PIDLE = queue_with_infinite_buffer(2000)
 
 elif(test_number == 6):
     def finite_buffer_event_list(Time,lambda_value,L=2000):
